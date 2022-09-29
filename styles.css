@@ -5,6 +5,7 @@
     --soft-red: hsl(0, 94%, 66%);
     --grayish-blue: hsl(229, 8%, 60%);
     --very-dark-blue: hsl(229, 31%, 21%);
+    --shriked-width: 450px;
 }
 
 *,
@@ -18,6 +19,11 @@
 body {
     font-family: 'Rubik', sans-serif;
     font-size: 18px;
+}
+
+.container {
+    max-width: 1440px;
+    margin: 0 32px;
 }
 
 
@@ -58,16 +64,99 @@ body {
 
 header {
     width: 100%;
+    padding: 40px 0;
 }
 
 .head-content {
     display: flex;
     justify-content: space-between;
-    padding: 40px 32px;
+    align-items: center;
+    /* padding: 40px 32px; */
 }
 
 .desktop-nav {
     display: none;
+}
+
+.nav-toggler {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.mobile-nav {
+    position: fixed;
+    z-index: 1000;
+    background-color: var(--very-dark-blue);
+    opacity: .9;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    padding: 40px 0;
+    display: none;
+    flex-direction: column;
+    /* justify-content: space-between; */
+}
+
+.show-mobile-menu {
+    display: flex !important;
+}
+
+.mobile-nav .mobile-navigation-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mobile-nav .mobile-nav-list {
+    list-style: none;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 32px;
+}
+
+.mobile-nav-list li {
+    border-top: 1px solid white;
+}
+
+.mobile-nav-list li:last-child {
+    border-bottom: 1px solid white;
+}
+
+.mobile-nav-list a {
+    color: white;
+    text-decoration: none;
+    padding: 16px 0;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    font-size: 1.2em;
+    /* border-top: 1px solid #333; */
+}
+
+.mobile-nav .login {
+    margin-top: 32px;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    width: 100%;
+    padding: 16px;
+    background-color: transparent;
+    border-radius: 7px;
+    border: 2px solid white;
+    color: white;
+}
+
+.mobile-nav .socials {
+    margin-top: auto;
+    display: flex;
+    gap: 24px;
+    justify-content: center;
 }
 
 
@@ -232,7 +321,7 @@ section .section-head .section-description {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 16px;
+    /* padding: 16px; */
     gap: 30px;
     margin-top: 70px;
 }
@@ -277,27 +366,31 @@ section .section-head .section-description {
 
 .faqs-list {
     padding: 32px 16px;
-    /* border-top: ; */
 }
 
 .faq {
-    margin-block: 8px;
-    box-shadow: 2px 2px 24px rgba(0, 0, 0, .09);
-    border-radius: 5px;
+    margin-block: 16px;
+    /* box-shadow: 2px 2px 24px rgba(0, 0, 0, .09); */
+    border-bottom: 2px solid #aaa;
+    /* border-radius: 5px; */
+}
+
+.faq:nth-last-of-type() {
+    border-top: 2px soloe;
 }
 
 .faq .answer {
-    border-top: 2px dashed rgba(0, 0, 0, .09);
-    /* padding: 16px; */
-    display: none;
+    color: #444;
+    font-size: .9em;
+    height: 0;
 }
 
 .question {
-    /* padding: 16px; */
     display: flex;
     align-items: center;
     padding: 8px;
     justify-content: space-between;
+    cursor: pointer;
 }
 
 .question-text {
@@ -308,6 +401,7 @@ section .section-head .section-description {
     font-size: 2em;
     color: var(--soft-blue);
     transition: all .3s ease-in;
+    transform: rotate(0deg);
 }
 
 .faq.show .question .arrowkey {
@@ -316,14 +410,15 @@ section .section-head .section-description {
 }
 
 .answer {
-    padding: 0 16px;
+    padding: 10px 16px;
     height: auto;
     padding: 4px;
     overflow: hidden;
+    transition: height .3s ease-in
 }
 
 .faq.show .answer {
-    display: block;
+    height: auto;
 }
 
 .general-more-info {
@@ -376,11 +471,15 @@ section .section-head .section-description {
     padding: 0;
 }
 
+.top-foot-content .subscriber-form .input-field {
+    background-color: white;
+}
+
 .top-foot-content .subscriber-form[data-status='failed'] .input-field {
     background-color: var(--soft-red);
 }
 
-.top-foot-content .subscriber-form[data-status='failed'] .error {
+.top-foot-content .subscriber-form[data-status='failed'] .error-message {
     display: block;
 }
 
@@ -390,10 +489,20 @@ section .section-head .section-description {
 
 .top-foot-content .input-field {
     background-color: transparent;
-    padding: 5px;
+    padding: 4px;
     /* padding-top: -2px; */
     width: 100%;
     border-radius: 7px;
+}
+
+.subscriber-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.subscriber-form .input-field {
+    flex-grow: 1;
 }
 
 .subscriber-form .form-control {
@@ -406,12 +515,17 @@ section .section-head .section-description {
     border-radius: 7px;
 }
 
-.subscriber-form .error {
-    padding: 6px 8px;
-    font-size: .8em;
+.subscriber-form .error-message {
+    padding: 3px 4px;
+    font-size: .7em;
     font-style: italic;
     display: none;
 }
+
+
+/* .subscriber-form[data-status] .error-message {
+    display: block;
+} */
 
 .submit-btn {
     width: calc(100% - 7px);
@@ -458,13 +572,20 @@ section .section-head .section-description {
 
 @media (min-width: 760px) {
     /* header styles */
+    .row {
+        display: flex;
+        justify-content: center;
+    }
+    .nav-toggler {
+        display: none;
+    }
     .head-content {
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding-right: 10%;
     }
-    .mobile-nav-hamburger {
+    .mobile-nav {
         display: none;
     }
     .desktop-nav {
@@ -517,10 +638,45 @@ section .section-head .section-description {
     }
     .tab-switcher .tab {
         border-bottom: 1px solid var(--grayish-blue);
+        /* padding-inline: 32px; */
+    }
+    .tab-switcher .tab span {
+        display: inline-block;
         padding-inline: 32px;
     }
     .feature {
         flex-direction: row;
-        height: 100px;
+        /* height: 100px; */
+    }
+    .feature-description {
+        text-align: left;
+        padding-right: 100px;
+    }
+    .feature-description-details {
+        margin-block: 16px;
+    }
+    .feature-graphic .image {
+        padding: 40px 32px 40px 100px;
+    }
+    .feature-more {
+        padding: 8px;
+        border-radius: 5px;
+        border: none;
+        background-color: var(--soft-blue);
+        font-size: 1em;
+        color: white;
+    }
+    .browsers {
+        flex-direction: row;
+        padding-inline: 64px;
+    }
+    .top-foot-content .subscriber-form {
+        width: 700px;
+        flex-direction: row;
+        align-items: flex-start;
+    }
+    .faqs {
+        max-width: var(--shriked-width);
+        margin: 0 auto;
     }
 }
