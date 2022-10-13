@@ -522,10 +522,9 @@ section .section-head .section-description {
     display: none;
 }
 
-
-/* .subscriber-form[data-status] .error-message {
+.subscriber-form[data-status='failed'] .error-message {
     display: block;
-} */
+}
 
 .submit-btn {
     width: calc(100% - 7px);

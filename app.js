@@ -3,6 +3,7 @@ const closeBtn = document.querySelector(".close")
 const menuBtn = document.querySelector(".nav-toggler")
 const arrowKey = document.querySelectorAll('.arrowKey')
 const mobileMenu = document.querySelector('.mobile-nav')
+const form = document.querySelector('.subscriber-form')
 const formBtn = document.querySelector('.subscriber-form .submit-btn')
 const formInput = document.querySelector('.subscriber-form [name="email"]')
 
@@ -48,20 +49,18 @@ menuBtn.addEventListener('click', () => {
     mobileMenu.classList.add('show-mobile-menu')
 })
 
-
-
-
-formBtn.addEventListener('click', (e) => {
+// Add a submit event listener to the form
+form.addEventListener('submit', (e) => {
     e.preventDefault()
-    console.log(validateEmail(formInput))
+    if (validateEmail(form.email.value)) {
+        form.setAttribute('data-status', 'success')
+    } else {
+        form.setAttribute('data-status', 'failed')
+    }
 })
 
 // Javascript Email Validation gotten from StackOverflow
-
 const validateEmail = (email) => {
-    return String(email)
-        .toLowerCase()
-        .match(
-            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        );
+    let regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    return regex.test(email);
 };
